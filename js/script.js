@@ -2,7 +2,7 @@
 const   blockCreateElem = document.querySelector('.blockCreateElem');
 const   inp = document.querySelector('#inp');
 const   button = document.querySelector('button');
-// Загатовка class = selector = '.class', height = '40px', width = '120px', bg = 'blue', fontSize = '18px'
+
 function DomElement( height = '24px', width = '100px', bg = 'red', fontSize = '20px'){
     this.height = height;
     this.width = width;
