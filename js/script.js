@@ -3,27 +3,44 @@ const   blockCreateElem = document.querySelector('.blockCreateElem');
 const   inp = document.querySelector('#inp');
 const   button = document.querySelector('button');
 
-function DomElement( height = '24px', width = '100px', bg = 'red', fontSize = '20px'){
+function DomElement( selector = '.c', height = '24px', width = '100px', bg = 'red', fontSize = '20px' ){
+    this.selector = selector;
     this.height = height;
     this.width = width;
     this.bg = bg;
     this.fontSize = fontSize;
 }
-    DomElement.prototype.createElem = function(selector){
-        this.selector = selector;
-        let block;
+    DomElement.prototype.createElem = function( selector ){
+        if(selector === ''){
+            console.log('Берем дэфолтное значение');
+        } else {
+            this.selector = selector;
+        }
         const text = this.selector.slice(1);
-        this.selector.substring(0, 1) === '.' ? block = document.createElement('div') : block = document.createElement('p');
-        this.selector.substring(0, 1) === '.' ? block.setAttribute('class',text) : block.setAttribute('id', text);
-        block.style.cssText = 
-        `
-        height: ${this.height};
-        width: ${this.width};
-        background-color: ${this.bg};
-        font-size: ${this.fontSize};
-        `;
-        block.innerHTML = `${text}`;
-        blockCreateElem.append(block);
+        if(this.selector.substring(0, 1) === '.'){
+            blockCreateElem.insertAdjacentHTML('beforeend', `
+            <style>
+                .${text}{
+                    height: ${this.height};
+                    width: ${this.width};
+                    background-color: ${this.bg};
+                    font-size: ${this.fontSize};
+                }
+            </style>
+            <div class="${text}">${text}</div>
+            `);
+            } else if(this.selector.substring(0, 1) === '#'){ 
+            blockCreateElem.insertAdjacentHTML('beforeend', `
+                <style>
+                #${text}{
+                    height: ${this.height};
+                    width: ${this.width};
+                    background-color: ${this.bg};
+                    font-size: ${this.fontSize};
+                }
+                </style>
+            <p id="${text}">${text}</p>`);
+            }
     };
 const domElement = new DomElement();
 button.addEventListener('click', function () { 
